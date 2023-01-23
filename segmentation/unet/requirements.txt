@@ -1,0 +1,10 @@
+segmentation_models_pytorch
+imutils
+torch
+torchvision
+scikit-image
+pandas
+numpy
+PIL
+tqdm
+
