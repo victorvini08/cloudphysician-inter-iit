@@ -86,6 +86,7 @@ if __name__ == '__main__':
         mask = np.zeros(pred.shape)
         mask = cv2.fillPoly(mask, pts = [box] , color =(1,1,1))
         
+  
         seg = np.zeros(image.shape)
         image[:,:,0] = image[:,:,0]*mask
         image[:,:,1] = image[:,:,1]*mask

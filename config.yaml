@@ -1,1 +1,2 @@
 ocr-model: 'test/path'
+unet-model-path: 'unet_model_7.pth'
