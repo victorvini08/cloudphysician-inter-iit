@@ -5,7 +5,7 @@ from torchvision import transforms as tt
 import segmentation_models_pytorch as smp
 from imutils import perspective
 
-class segment:
+class Segment:
     def __init__(self, config):
         self.config = config
         self.cuda = torch.cuda.is_available() 
