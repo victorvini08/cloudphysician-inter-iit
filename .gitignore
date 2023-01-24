@@ -1,3 +1,5 @@
 results/*
 sample_images/*
 model-weights/*
+__pycache__/*
+

@@ -1,4 +1,4 @@
 ocr-model: 'test/path'
-unet-model-path: 'unet_model_7.pth'
+unet-model-path: '/home/raj/cloudphy/main-pipeline/model-weights/unet_model_7.pth'
 ocr :
   method : "trocr"

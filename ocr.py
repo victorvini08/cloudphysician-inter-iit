@@ -3,8 +3,8 @@ import ast
 import cv2
 import torch
 
-from paddleocr import PaddleOCR
-import pytesseract
+#from paddleocr import PaddleOCR
+#import pytesseract
 from transformers import TrOCRProcessor, VisionEncoderDecoderModel
 
 
