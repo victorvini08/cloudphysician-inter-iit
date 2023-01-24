@@ -1,3 +1,4 @@
+import os
 import yaml
 
 class ocr_model:
