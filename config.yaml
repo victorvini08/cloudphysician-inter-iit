@@ -1,4 +1,15 @@
 ocr-model: 'test/path'
-unet-model-path: '/home/raj/cloudphy/main-pipeline/model-weights/unet_model_7.pth'
+seg-model-path: '/content/drive/MyDrive/monitor-segmentation/models/Model_with_names/unet_model_7.pth'
 ocr :
-  method : "trocr"
+  method : "kerasocr_onnx"
+  kerasocr_weights_path: "/content/drive/MyDrive/ocr-models/kerasocr_weights.h5"
+  kerasocr_onnx_path : "/content/drive/MyDrive/ocr-models/kerasocr_onnx_weights.onnx"
+
+trained_model: "/content/drive/MyDrive/main-pipeline/ISD_SSD/weights/isd_vgg512.pth"
+visual_threshold: 0.6
+cuda_flag : False
+extra_size_bbox: 5
+
+
+# OCR Methods - feature_matching (mser, contour), kerasocr, paddleocr
+# trained_model: "/content/drive/MyDrive/main-pipeline/ISD_SSD/weights/isd_vgg512.pth"

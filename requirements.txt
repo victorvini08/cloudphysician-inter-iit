@@ -1,0 +1,5 @@
+pycocotools
+transformers[torch]
+pytesseract
+segmentation-models-pytorch
+paddle-ocr

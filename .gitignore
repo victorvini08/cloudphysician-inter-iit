@@ -2,4 +2,4 @@ results/*
 sample_images/*
 model-weights/*
 __pycache__/*
-
+ISD_SSD/weights/

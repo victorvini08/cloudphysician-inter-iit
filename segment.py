@@ -4,30 +4,42 @@ import torch
 from torchvision import transforms as tt
 import segmentation_models_pytorch as smp
 from imutils import perspective
+from PIL import Image
 
 class Segment:
     def __init__(self, config):
-        self.config = config
         self.cuda = torch.cuda.is_available() 
-        if not self.cuda:
-            print('CUDA Not Available, running on CPU.\n')
-        model = torch.load(config['unet-model-path'], 'cpu')
-        self.unet = smp.Unet(encoder_weights = model['encoder_weights'],
-                            encoder_depth = model['encoder_depth'],
-                            encoder_name = model['encoder_name'],
-                            decoder_channels = model['decoder_channels'],
-                            classes = 2)
-        if self.cuda:
-            self.unet = self.unet.cuda()
+        # if not self.cuda:
+        #     print('CUDA Not Available, running on CPU.\n')
+        model = torch.load(config['seg-model-path'], 'cpu')
+        
+        if model['name_model'] == 'unet':
+            self.segmodel = smp.Unet(encoder_weights = model['encoder_weights'],
+                                encoder_depth = model['encoder_depth'],
+                                encoder_name = model['encoder_name'],
+                                decoder_channels = model['decoder_channels'],
+                                classes = 2)
+        elif model['name_model'] == 'psp':
+            self.segmodel = smp.PSPNet(encoder_name=model['encoder_name'],
+                                    encoder_weights=model['encoder_weights'],
+                                    encoder_depth=model['encoder_depth'],
+                                    classes=2, upsampling=32)
+        elif model['name_model'] == 'fpn':
+            self.segmodel = smp.FPN(encoder_name = model['encoder_name'],
+                     encoder_weights = model['encoder_weights'],
+                     encoder_depth = model['encoder_depth'], classes=2)
 
-        self.unet.load_state_dict(model['state_dict'])
+        if self.cuda:
+            self.segmodel = self.segmodel.cuda()
+
+        self.segmodel.load_state_dict(model['state_dict'])
         self.transforms = tt.Compose([
             tt.Resize((192, 320)),
             tt.ToTensor()
         ])
     
     def predict_mask(self, image, w, h):
-        pred = self.unet(image)[0].detach().cpu().numpy()
+        pred = self.segmodel(image)[0].detach().cpu().numpy()
         pred = np.argmax(pred, axis=0)
 
         pred = np.reshape(pred, (pred.shape[0], pred.shape[1], 1)).astype(np.float32)
@@ -82,7 +94,6 @@ class Segment:
         """
         Arguments
             image: Numpy Array of Image in RGB: (H, W, 3)
-
         Returns
             ROI: Numpy Array of Region of Interest in RGB: (H, W, 3)
         """
